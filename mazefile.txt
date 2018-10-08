@@ -1,51 +1,51 @@
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 X.....................XX.....................X
-X.....................XX.....................X
-X.....................XX.....................X
-X...XXXXX...XXXXXXX...XX...XXXXXXX...XXXXX...X
-X...XXXXX...XXXXXXX...XX...XXXXXXX...XXXXX...X
-X...XXXXX...XXXXXXX...XX...XXXXXXX...XXXXX...X
+X.ddddddddddddddddddd.XX.ddddddddddddddddddd.X
+X.d.......d.........d.XX.d.........d.......d.X
+X.d.XXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXX.d.X
+X.d.XXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXX.d.X
+X.d.XXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXX.d.X
+X.d.......d.........d....d.........d.......d.X
+X.dddddddddddddddddddddddddddddddddddddddddd.X
+X.d.......d....d..............d....d.......d.X
+X.d.XXXXX.d.XX.d.XXXXXXXXXXXX.d.XX.d.XXXXX.d.X
+X.d.XXXXX.d.XX.d.XXXXXXXXXXXX.d.XX.d.XXXXX.d.X
+X.d.......d.XX.d......XX......d.XX.d.......d.X
+X.ddddddddd.XX.dddddd.XX.dddddd.XX.ddddddddd.X
+X.........d.XX......d.XX.d......XX.d.........X
+XXXXXXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXXXXXX
+        X.d.XXXXXXX.d.XX.d.XXXXXXX.d.X
+        X.d.XX......d....d......XX.d.X
+        X.d.XX.dddddddddddddddd.XX.d.X
+        X.d.XX.d..............d.XX.d.X
+        X.d.XX.d.XXXX....XXXX.d.XX.d.X
+XXXXXXXXX.d.XX.d.X..........X.d.XX.d.XXXXXXXXX
+X.........d....d.X..........X.d....d.........X
+X.dddddddddddddd.X..........X.dddddddddddddd.X
+X.........d....d.X..........X.d....d.........X
+XXXXXXXXX.d.XX.d.X..........X.d.XX.d.XXXXXXXXX
+        X.d.XX.d.XXXXXXXXXXXX.d.XX.d.X
+        X.d.XX.d..............d.XX.d.X
+        X.d.XX.dddddddddddddddd.XX.d.X
+        X.d.XX.d..............d.XX.d.X
+        X.d.XX.d.XXXXXXXXXXXX.d.XX.d.X
+XXXXXXXXX.d.XX.d.XXXXXXXXXXXX.d.XX.d.XXXXXXXXX
+X.........d....d......XX......d....d.........X
+X.ddddddddddddddddddd.XX.ddddddddddddddddddd.X
+X.d.......d.........d.XX.d.........d.......d.X
+X.d.XXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXX.d.X
+X.d.XXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXX.d.X
+X.d....XX.d.........d....d.........d.XX....d.X
+X.dddd.XX.dddddddddddddddddddddddddd.XX.dddd.X
+X....d.XX.d....d..............d....d.XX.d....X
+XXXX.d.XX.d.XX.d.XXXXXXXXXXXX.d.XX.d.XX.d.XXXX
+XXXX.d.XX.d.XX.d.XXXXXXXXXXXX.d.XX.d.XX.d.XXXX
+X....d....d.XX.d......XX......d.XX.d....d....X
+X.ddddddddd.XX.dddddd.XX.dddddd.XX.ddddddddd.X
+X.d.........XX......d.XX.d......XX.........d.X
+X.d.XXXXXXXXXXXXXXX.d.XX.d.XXXXXXXXXXXXXXX.d.X
+X.d.XXXXXXXXXXXXXXX.d.XX.d.XXXXXXXXXXXXXXX.d.X
+X.d.................d....d.................d.X
+X.dddddddddddddddddddddddddddddddddddddddddd.X
 X............................................X
-X............................................X
-X............................................X
-X...XXXXX...XX...XXXXXXXXXXXX...XX...XXXXX...X
-X...XXXXX...XX...XXXXXXXXXXXX...XX...XXXXX...X
-X...........XX........XX........XX...........X
-X...........XX........XX........XX...........X
-X...........XX........XX........XX...........X
-XXXXXXXXX...XXXXXXX...XX...XXXXXXX...XXXXXXXXX
-        X...XXXXXXX...XX...XXXXXXX...X
-        X...XX..................XX...X
-        X...XX..................XX...X
-        X...XX..................XX...X
-        X...XX...XXXX....XXXX...XX...X
-XXXXXXXXX...XX...X..........X...XX...XXXXXXXXX
-X................X..........X................X
-X................X..........X................X
-X................X..........X................X
-XXXXXXXXX...XX...X..........X...XX...XXXXXXXXX
-        X...XX...XXXXXXXXXXXX...XX...X
-        X...XX..................XX...X
-        X...XX..................XX...X
-        X...XX..................XX...X
-        X...XX...XXXXXXXXXXXX...XX...X
-XXXXXXXXX...XX...XXXXXXXXXXXX...XX...XXXXXXXXX
-X.....................XX.....................X
-X.....................XX.....................X
-X.....................XX.....................X
-X...XXXXX...XXXXXXX...XX...XXXXXXX...XXXXX...X
-X...XXXXX...XXXXXXX...XX...XXXXXXX...XXXXX...X
-X......XX............................XX......X
-X......XX............................XX......X
-X......XX............................XX......X
-XXXX...XX...XX...XXXXXXXXXXXX...XX...XX...XXXX
-XXXX...XX...XX...XXXXXXXXXXXX...XX...XX...XXXX
-X...........XX........XX........XX...........X
-X...........XX........XX........XX...........X
-X...........XX........XX........XX...........X
-X...XXXXXXXXXXXXXXX...XX...XXXXXXXXXXXXXXX...X
-X...XXXXXXXXXXXXXXX...XX...XXXXXXXXXXXXXXX...X
-X............................................X
-X............................................X
-X............................................X
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX      

@@ -3,10 +3,10 @@ import pygame
 
 class ImageRect:
     def __init__(self, screen, filename, sizex, sizey):
-        name = "images/"+filename+".png"
+        self.name = "images/"+filename+".png"
         
         self.screen = screen
-        self.image = pygame.image.load(name)
+        self.image = pygame.image.load(self.name)
         self.image = pygame.transform.scale(self.image, (sizex, sizey))
         
         self.rect = self.image.get_rect()

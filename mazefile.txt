@@ -3,7 +3,7 @@ X.....................XX.....................X
 X.ddddddddddddddddddd.XX.ddddddddddddddddddd.X
 X.d.......d.........d.XX.d.........d.......d.X
 X.d.XXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXX.d.X
-X.d.XXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXX.d.X
+X.+.XXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXX.+.X
 X.d.XXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXX.d.X
 X.d.......d.........d....d.........d.......d.X
 X.dddddddddddddddddddddddddddddddddddddddddd.X
@@ -20,13 +20,13 @@ XXXXXXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXXXXXX
         X.d.XX.d..............d.XX.d.X
         X.d.XX.d.XXXX....XXXX.d.XX.d.X
 XXXXXXXXX.d.XX.d.X..........X.d.XX.d.XXXXXXXXX
-X.........d....d.X..........X.d....d.........X
-X.dddddddddddddd.X..........X.dddddddddddddd.X
-X.........d....d.X..........X.d....d.........X
+..........d....d.X..........X.d....d..........
+..dddddddddddddd.X..........X.dddddddddddddd..
+..........d....d.X..........X.d....d..........
 XXXXXXXXX.d.XX.d.X..........X.d.XX.d.XXXXXXXXX
         X.d.XX.d.XXXXXXXXXXXX.d.XX.d.X
         X.d.XX.d..............d.XX.d.X
-        X.d.XX.dddddddddddddddd.XX.d.X
+        X.d.XX.dddddd.P.ddddddd.XX.d.X
         X.d.XX.d..............d.XX.d.X
         X.d.XX.d.XXXXXXXXXXXX.d.XX.d.X
 XXXXXXXXX.d.XX.d.XXXXXXXXXXXX.d.XX.d.XXXXXXXXX
@@ -36,7 +36,7 @@ X.d.......d.........d.XX.d.........d.......d.X
 X.d.XXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXX.d.X
 X.d.XXXXX.d.XXXXXXX.d.XX.d.XXXXXXX.d.XXXXX.d.X
 X.d....XX.d.........d....d.........d.XX....d.X
-X.dddd.XX.dddddddddddddddddddddddddd.XX.dddd.X
+X.+ddd.XX.dddddddddddddddddddddddddd.XX.ddd+.X
 X....d.XX.d....d..............d....d.XX.d....X
 XXXX.d.XX.d.XX.d.XXXXXXXXXXXX.d.XX.d.XX.d.XXXX
 XXXX.d.XX.d.XX.d.XXXXXXXXXXXX.d.XX.d.XX.d.XXXX

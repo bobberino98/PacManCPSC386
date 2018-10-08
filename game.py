@@ -9,9 +9,10 @@ class Game:
     
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((460, 510))
+        self.screen = pygame.display.set_mode((460, 560))
         pygame.display.set_caption("Pacman Portal")
         self.p_man = PacMan(self.screen)
+
         self.maze = Maze(self.screen, 'mazefile.txt', 'brick', 'portal', 'shield', 'pill', self.p_man)
 
     def update_screen(self):

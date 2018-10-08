@@ -10,7 +10,6 @@ class EventLoop:
         self.p_man = p_man
         self.maze = maze
 
-
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

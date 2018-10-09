@@ -5,11 +5,11 @@ import pygame
 
 class Ghost(Sprite):
 
-    def __init__(self, ghost_type, rect, p_man, screen, bricks):
+    def __init__(self, ghost_type, rect, p_man, screen, maze):
         super(Ghost, self).__init__()
         self.type = ghost_type
         self.p_man = p_man
-        self.bricks = bricks
+        self.maze = maze
         if self.type == 'b':
             self.filename = "g_red_"
         elif self.type == 'p':
@@ -26,6 +26,10 @@ class Ghost(Sprite):
         self.collide_left = False
         self.collide_up = False
         self.collide_down = False
+        self.moving_right = False
+        self.moving_left = True
+        self.moving_up = False
+        self.moving_down = False
         self.state = 1
         self.dir = 'left'
         self.im = ImageRect(self.screen, self.filename+self.dir+'_'+str(self.state), 25, 25)
@@ -35,7 +39,7 @@ class Ghost(Sprite):
     def move_left(self):
         if pygame.time.get_ticks() - self.timer >= 100:
             self.rect.x -= self.speed
-            for brick in self.bricks:
+            for brick in self.maze.bricks:
                 if self.rect.colliderect(brick):
                     self.rect.x = brick.left - 1 - self.rect.width
                     self.collide_left = True
@@ -45,7 +49,7 @@ class Ghost(Sprite):
         if pygame.time.get_ticks() - self.timer >= 100:
             if not self.collide_right:
                 self.rect.x += self.speed
-                for brick in self.bricks:
+                for brick in self.maze.bricks:
                     if self.rect.colliderect(brick):
                         self.rect.x = brick.left - 1 - self.rect.width
                         self.collide_right = True
@@ -55,7 +59,7 @@ class Ghost(Sprite):
         if pygame.time.get_ticks() - self.timer >= 100:
             if self.rect.y < self.target.y and not self.collide_up:
                 self.rect.y -= self.speed
-                for brick in self.bricks:
+                for brick in self.maze.bricks:
                     if self.rect.colliderect(brick):
                         self.rect.y = brick.bottom + 1
                         self.collide_up = True
@@ -64,7 +68,7 @@ class Ghost(Sprite):
     def move_down(self):
         if pygame.time.get_ticks() - self.timer >= 100:
             self.rect.y += self.speed
-            for brick in self.bricks:
+            for brick in self.maze.bricks:
                 if self.rect.colliderect(brick):
                     self.rect.y = brick.top - 1 - self.rect.height
                     self.collide_down = True
@@ -73,60 +77,33 @@ class Ghost(Sprite):
     def update(self):
         if self.type == 'b':
             self.target = self.p_man.rect
-            if self.rect.x < self.target.x:
-                if not self.collide_right:
-                    self.move_right()
-                else:
-                    if self.rect.y < self.target.y and not self.collide_up:
-                        self.move_up()
-                        self.collide_right = False
-                    elif self.rect.y > self.target.y and not self.collide_down:
-                        self.move_down()
-                        self.collide_right = False
-                    else:
-                        self.move_left()
-                        self.collide_right = False
-            elif self.rect.x > self.target.x:
-                if not self.collide_left:
-                    self.move_left()
-                else:
-                    if self.rect.y < self.target.y and not self.collide_up:
-                        self.move_up()
-                        self.collide_left = False
-                    elif self.rect.y > self.target.y and not self.collide_down:
-                        self.move_down()
-                        self.collide_left = False
-                    else:
-                        self.move_right()
-                        self.collide_left = False
-            elif self.rect.y > self.target.y:
-                if not self.collide_up:
-                    self.move_up()
-                else:
-                    if self.rect.x < self.target.x and not self.collide_right:
-                        self.move_right()
-                        self.collide_up = False
-                    elif self.rect.x > self.target.x and not self.collide_left:
-                        self.move_left()
-                        self.collide_up = False
+            for i in self.maze.intersections:
+                if self.rect.colliderect(i):
+                    if self.rect.x < self.target.x and i.right:
+                        self.moving_right = True
+                        self.moving_left = False
+                        self.moving_up = False
+                        self.moving_down = False
+                    elif self.rect.x > self.target.x and i.left:
+                        self.moving_right = False
+                        self.moving_left = True
+                        self.moving_up = False
+                        self.moving_down = False
+                    elif self.rect.y < self.target.y and i.down:
+                        self.moving_right = False
+                        self.moving_left = False
+                        self.moving_up = False
+                        self.moving_down = True
+                    elif self.rect.y > self.target.y and i.up:
+                        self.moving_right = False
+                        self.moving_left = False
+                        self.moving_up = True
+                        self.moving_down = False
 
-                    else:
-                        self.move_down()
-                        self.collide_up = False
-            elif self.rect.y < self.target.y:
-                if not self.collide_down:
-                    self.move_down()
-                else:
-                    if self.rect.x < self.target.x and not self.collide_right:
-                        self.move_right()
-                        self.collide_down = False
 
-                    elif self.rect.x > self.target.x and not self.collide_left:
-                        self.move_left()
-                        self.collide_down = False
-                    else:
-                        self.move_up()
-                        self.collide_down = False
+
+
+
 
         elif self.type == 'p':
             self.target = self.game.p_man.rect
@@ -143,7 +120,8 @@ class Ghost(Sprite):
        # elif self.type == 'c':
       #      self.target = self.game.p_man.rect
         #    if self.rect.x < self.target:
-
+        if self.moving_left:
+            self.move_left()
         if self.state == 1:
             self.state = 2
         elif self.state == 2:

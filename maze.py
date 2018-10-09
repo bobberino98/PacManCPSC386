@@ -6,6 +6,15 @@ from pac_man import PacMan
 from ghost import Ghost
 
 
+class Intersection:
+    def __init__(self, up, down, left, right, rect):
+        self.up = up
+        self.down = down
+        self.right = right
+        self.left = left
+        self.rect = rect
+
+
 class Maze:
     RED = (255, 0, 0)
     BRICK_SIZE = 10
@@ -23,8 +32,9 @@ class Maze:
         self.pills = Group()
         sz = Maze.BRICK_SIZE
         self.brick = ImageRect(screen, brickfile, sz, sz)
-        self.blinky = Ghost('b', self.brick.rect, self.p_man, self.screen, self.bricks)
+        self.blinky = Ghost('b', self.brick.rect, self.p_man, self.screen, self)
         self.deltax = self.deltay = Maze.BRICK_SIZE
+        self.intersections = []
 
         self.build()
 
@@ -46,7 +56,26 @@ class Maze:
                 elif col == '+':
                     self.pills.add(Pill(self.screen, pygame.Rect(ncol*dx, nrow*dy, 10, 10)))
                 elif col == 'b':
-                    self.blinky = Ghost('b', pygame.Rect(ncol*dx, nrow*dy, 25, 25), self.p_man, self.screen, self.bricks)
+                    self.blinky = Ghost('b', pygame.Rect(ncol*dx, nrow*dy-7, 25, 25), self.p_man, self.screen,
+                                        self)
+                elif col == '1':
+                    self.intersections.append(Intersection(True, True, True, True,
+                                                           (pygame.Rect(ncol*dx, nrow*dy, w, h))))
+                elif col == '2':
+                    self.intersections.append(Intersection(False, True, True, True,
+                                                           (pygame.Rect(ncol * dx, nrow * dy, w, h))))
+                elif col == '3':
+                    self.intersections.append(Intersection(True, False, True, True,
+                                                           (pygame.Rect(ncol * dx, nrow * dy, w, h))))
+                elif col == '4':
+                    self.intersections.append(Intersection(True, True, False, True,
+                                                           (pygame.Rect(ncol * dx, nrow * dy, w, h))))
+                elif col == '5':
+                    self.intersections.append(Intersection(True, True, True, False,
+                                                           (pygame.Rect(ncol * dx, nrow * dy, w, h))))
+                elif col == '6':
+                    self.intersections.append(Intersection(False, False, True, True,
+                                                           (pygame.Rect(ncol * dx, nrow * dy, w, h))))
 
     def blitme(self):
         for rect in self.bricks:

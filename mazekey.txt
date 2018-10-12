@@ -1,6 +1,7 @@
 all directions = 1
 not up =2
-not diown = 3
+not down = 3
 not left= 4
 not right = 5
 side only = 6
+corner = 7

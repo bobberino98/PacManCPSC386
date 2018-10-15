@@ -33,7 +33,7 @@ class Ghost(Sprite):
             self.filename = 'g_orng_'
         self.screen = screen
         self.target = None
-        self.speed = 8
+        self.speed = 200
         self.collide_right = False
         self.collide_left = False
         self.collide_up = False
@@ -52,7 +52,7 @@ class Ghost(Sprite):
 
     def update(self, move):
 
-        if pygame.time.get_ticks() - self.timer >= 0:
+        if pygame.time.get_ticks() - self.timer >= self.speed:
             if move:
                 self.col = self.nextcol
                 self.row = self.nextrow

@@ -4,12 +4,13 @@ import sys
 
 class EventLoop:
     
-    def __init__(self, finished, p_man, maze, ghosts):
+    def __init__(self, finished, p_man, maze, ghosts, stats):
         
         self.finished = finished
         self.p_man = p_man
         self.maze = maze
         self.ghosts = ghosts
+        self.stats = stats
 
     def check_events(self):
         for event in pygame.event.get():
@@ -61,23 +62,15 @@ class EventLoop:
         if collisions:
             for sprite in collisions:
                 self.maze.dots.remove(sprite)
+                self.stats.score += 10
 
         collisions = pygame.sprite.spritecollide(self.p_man, self.maze.pills, True)
 
         if collisions:
             for sprite in collisions: 
                 self.maze.pills.remove(sprite)
+                self.stats.score += 50
 
         collisions = pygame.sprite.spritecollide(self.p_man, self.ghosts, False)
         if collisions:
             self.p_man.dead = True
-
-        s_rect = self.p_man.screen.get_rect()
-        if self.p_man.rect.x < 0:
-            self.p_man.rect.x = s_rect.width
-        elif self.p_man.rect.x > s_rect.width:
-            self.p_man.rect.x = 0
-
-
-
-

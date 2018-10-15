@@ -145,6 +145,6 @@ class Maze:
         for rect in self.xwalls:
             self.screen.blit(self.xwall.image, rect)
         self.dots.update()
-        #self.blinky.update()
+
 
         self.pills.update()

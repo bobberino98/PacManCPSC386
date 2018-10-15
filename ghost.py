@@ -19,14 +19,12 @@ class Ghost(Sprite):
             self.targetrow = self.p_man.row
             self.nextrow = self.row
             self.nextcol = self.col - 1
-        if self.type == 'p':
+        elif self.type == 'p':
             self.filename = "g_pink_"
             self.targetcol = self.p_man.col + 4
             self.targetrow = self.p_man.row
             self.nextrow = self.row
             self.nextcol = self.col - 1
-        elif self.type == 'p':
-            self.filename = 'g_pink_'
         elif self.type == 'i':
             self.filename = 'g_teal_'
         elif self.type == 'c':
@@ -116,7 +114,7 @@ class Ghost(Sprite):
             self.im.blitme()
 
     def update_target(self):
-        if self.type ==  'b':
+        if self.type == 'b':
             self.targetrow = self.p_man.row
             self.targetcol = self.p_man.col
         elif self.type == 'p':

@@ -1,14 +1,15 @@
 import operator
 import math
 
+
 class Vec2d(object):
     """2d vector class, supports vector and scalar operators,
        and also provides a bunch of high level functions
        """
     __slots__ = ['x', 'y']
 
-    def __init__(self, x_or_pair, y = None):
-        if y == None:
+    def __init__(self, x_or_pair, y=None):
+        if y is None:
             self.x = x_or_pair[0]
             self.y = x_or_pair[1]
         else:
@@ -56,11 +57,11 @@ class Vec2d(object):
 
     # Generic operator handlers
     def _o2(self, other, f):
-        "Any two-operator operation where the left operand is a Vec2d"
+        # Any two-operator operation where the left operand is a Vec2d
         if isinstance(other, Vec2d):
             return Vec2d(f(self.x, other.x),
                          f(self.y, other.y))
-        elif (hasattr(other, "__getitem__")):
+        elif hasattr(other, "__getitem__"):
             return Vec2d(f(self.x, other[0]),
                          f(self.y, other[1]))
         else:
@@ -68,8 +69,8 @@ class Vec2d(object):
                          f(self.y, other))
 
     def _r_o2(self, other, f):
-        "Any two-operator operation where the right operand is a Vec2d"
-        if (hasattr(other, "__getitem__")):
+        # Any two-operator operation where the right operand is a Vec2d
+        if hasattr(other, "__getitem__"):
             return Vec2d(f(other[0], self.x),
                          f(other[1], self.y))
         else:
@@ -77,8 +78,8 @@ class Vec2d(object):
                          f(other, self.y))
 
     def _io(self, other, f):
-        "inplace operator"
-        if (hasattr(other, "__getitem__")):
+        # inplace operator
+        if hasattr(other, "__getitem__"):
             self.x = f(self.x, other[0])
             self.y = f(self.y, other[1])
         else:
@@ -112,22 +113,24 @@ class Vec2d(object):
     def __sub__(self, other):
         if isinstance(other, Vec2d):
             return Vec2d(self.x - other.x, self.y - other.y)
-        elif (hasattr(other, "__getitem__")):
+        elif hasattr(other, "__getitem__"):
             return Vec2d(self.x - other[0], self.y - other[1])
         else:
             return Vec2d(self.x - other, self.y - other)
+
     def __rsub__(self, other):
         if isinstance(other, Vec2d):
             return Vec2d(other.x - self.x, other.y - self.y)
-        if (hasattr(other, "__getitem__")):
+        if hasattr(other, "__getitem__"):
             return Vec2d(other[0] - self.x, other[1] - self.y)
         else:
             return Vec2d(other - self.x, other - self.y)
+
     def __isub__(self, other):
         if isinstance(other, Vec2d):
             self.x -= other.x
             self.y -= other.y
-        elif (hasattr(other, "__getitem__")):
+        elif hasattr(other, "__getitem__"):
             self.x -= other[0]
             self.y -= other[1]
         else:
@@ -139,7 +142,7 @@ class Vec2d(object):
     def __mul__(self, other):
         if isinstance(other, Vec2d):
             return Vec2d(self.x*other.x, self.y*other.y)
-        if (hasattr(other, "__getitem__")):
+        if hasattr(other, "__getitem__"):
             return Vec2d(self.x*other[0], self.y*other[1])
         else:
             return Vec2d(self.x*other, self.y*other)
@@ -149,7 +152,8 @@ class Vec2d(object):
         if isinstance(other, Vec2d):
             self.x *= other.x
             self.y *= other.y
-        elif (hasattr(other, "__getitem__")):
+
+        elif hasattr(other, "__getitem__"):
             self.x *= other[0]
             self.y *= other[1]
         else:
@@ -157,53 +161,48 @@ class Vec2d(object):
             self.y *= other
         return self
 
-    # Division
-    def __div__(self, other):
-        return self._o2(other, operator.div)
-    def __rdiv__(self, other):
-        return self._r_o2(other, operator.div)
-    def __idiv__(self, other):
-        return self._io(other, operator.div)
-
     def __floordiv__(self, other):
         return self._o2(other, operator.floordiv)
+
     def __rfloordiv__(self, other):
         return self._r_o2(other, operator.floordiv)
+
     def __ifloordiv__(self, other):
         return self._io(other, operator.floordiv)
 
     def __truediv__(self, other):
         return self._o2(other, operator.truediv)
+
     def __rtruediv__(self, other):
         return self._r_o2(other, operator.truediv)
+
     def __itruediv__(self, other):
         return self._io(other, operator.floordiv)
 
     # Modulo
     def __mod__(self, other):
         return self._o2(other, operator.mod)
+
     def __rmod__(self, other):
         return self._r_o2(other, operator.mod)
-
-    def __divmod__(self, other):
-        return self._o2(other, operator.divmod)
-    def __rdivmod__(self, other):
-        return self._r_o2(other, operator.divmod)
 
     # Exponentation
     def __pow__(self, other):
         return self._o2(other, operator.pow)
+
     def __rpow__(self, other):
         return self._r_o2(other, operator.pow)
 
     # Bitwise operators
     def __lshift__(self, other):
         return self._o2(other, operator.lshift)
+
     def __rlshift__(self, other):
         return self._r_o2(other, operator.lshift)
 
     def __rshift__(self, other):
         return self._o2(other, operator.rshift)
+
     def __rrshift__(self, other):
         return self._r_o2(other, operator.rshift)
 
@@ -238,6 +237,7 @@ class Vec2d(object):
 
     def get_length(self):
         return math.sqrt(self.x**2 + self.y**2)
+
     def __setlength(self, value):
         length = self.get_length()
         self.x *= value/length
@@ -262,9 +262,10 @@ class Vec2d(object):
         return Vec2d(x, y)
 
     def get_angle(self):
-        if (self.get_length_sqrd() == 0):
+        if self.get_length_sqrd() == 0:
             return 0
         return math.degrees(math.atan2(self.y, self.x))
+
     def __setangle(self, angle_degrees):
         self.x = self.length
         self.y = 0
@@ -315,8 +316,8 @@ class Vec2d(object):
     def cross(self, other):
         return self.x*other[1] - self.y*other[0]
 
-    def interpolate_to(self, other, range):
-        return Vec2d(self.x + (other[0] - self.x)*range, self.y + (other[1] - self.y)*range)
+    def interpolate_to(self, other, vrange):
+        return Vec2d(self.x + (other[0] - self.x)*range, self.y + (other[1] - self.y)*vrange)
 
     def convert_to_basis(self, x_vector, y_vector):
         return Vec2d(self.dot(x_vector)/x_vector.get_length_sqrd(), self.dot(y_vector)/y_vector.get_length_sqrd())
@@ -324,5 +325,5 @@ class Vec2d(object):
     def __getstate__(self):
         return [self.x, self.y]
 
-    def __setstate__(self, dict):
-        self.x, self.y = dict
+    def __setstate__(self, vdict):
+        self.x, self.y = vdict

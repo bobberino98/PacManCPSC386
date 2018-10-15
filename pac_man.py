@@ -1,7 +1,6 @@
 from pygame.sprite import Sprite
 from imagerect import ImageRect
 import pygame
-import sys
 
 
 class PacMan(Sprite):
@@ -82,7 +81,7 @@ class PacMan(Sprite):
                 self.dir = 'left'
                 temp = "pac_man_left_" + str(self.state)
             else:
-                return
+                return temp
             if self.rect.x < 0:
                 self.rect.centerx = 275
                 self.col = 27
@@ -101,8 +100,11 @@ class PacMan(Sprite):
             else:
                 self.state += 1
         else:
+            if self.death_state == 1:
+                deathsound = pygame.mixer.Sound("sounds/pacmandies.wav")
+                deathsound.play()
             if pygame.time.get_ticks() - self.speed_timer >= 200 and self.death_state < 12:
-                temp = "pac_man_death_" +str(self.death_state)
+                temp = "pac_man_death_" + str(self.death_state)
                 self.death_state += 1
                 self.rect = self.im.rect
                 self.im = ImageRect(self.screen, temp, 18, 18)

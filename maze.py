@@ -2,8 +2,6 @@ from imagerect import ImageRect
 import pygame
 from pygame.sprite import Group
 from dot import Dot, Pill
-from pac_man import PacMan
-from ghost import Ghost
 
 
 class Intersection:
@@ -19,13 +17,12 @@ class Maze:
     RED = (255, 0, 0)
     BRICK_SIZE = 10
 
-    def __init__(self, screen, mazefile, brickfile, portalfile, shieldfile, pillfile):
+    def __init__(self, screen, mazefile):
         self.screen = screen
         self.filename = mazefile
 
         with open(self.filename, 'r') as f:
             self.rows = f.read().splitlines()
-
 
         self.lwalls = []
         self.rwalls = []
@@ -55,7 +52,6 @@ class Maze:
         self.wwall = ImageRect(screen, "bottom_left_out", sz, sz)
         self.xwall = ImageRect(screen, "bottom_right_out", sz, sz)
 
-        #self.blinky = Ghost('b', self.lwall.rect, self.p_man, self.screen, self)
         self.deltax = self.deltay = Maze.BRICK_SIZE
         self.intersections = []
 
@@ -145,6 +141,5 @@ class Maze:
         for rect in self.xwalls:
             self.screen.blit(self.xwall.image, rect)
         self.dots.update()
-
 
         self.pills.update()

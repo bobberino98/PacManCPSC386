@@ -4,11 +4,12 @@ import sys
 
 class EventLoop:
     
-    def __init__(self, finished, p_man, maze):
+    def __init__(self, finished, p_man, maze, ghosts):
         
         self.finished = finished
         self.p_man = p_man
         self.maze = maze
+        self.ghosts = ghosts
 
     def check_events(self):
         for event in pygame.event.get():
@@ -22,12 +23,25 @@ class EventLoop:
     def check_keydown_events(self, event):
         if event.key == pygame.K_RIGHT:
             self.p_man.moving_right = True
+            self.p_man.moving_left = False
+            self.p_man.moving_up = False
+            self.p_man.moving_down = False
         elif event.key == pygame.K_LEFT:
             self.p_man.moving_left = True
+            self.p_man.moving_right = False
+            self.p_man.moving_up = False
+            self.p_man.moving_down = False
         elif event.key == pygame.K_UP:
             self.p_man.moving_up = True
+            self.p_man.moving_left = False
+            self.p_man.moving_down = False
+            self.p_man.moving_right = False
+
         elif event.key == pygame.K_DOWN:
             self.p_man.moving_down = True
+            self.p_man.moving_left = False
+            self.p_man.moving_right = False
+            self.p_man.moving_up = False
         elif event.key == pygame.K_q:
             sys.exit()
 
@@ -54,20 +68,10 @@ class EventLoop:
             for sprite in collisions: 
                 self.maze.pills.remove(sprite)
 
-        for brick in self.maze.bricks:
-            if self.p_man.rect.colliderect(brick):
-                if self.p_man.moving_down:
-                    self.p_man.moving_down = False
-                    self.p_man.im.rect.y = brick.top - 1 - self.p_man.rect.height
-                elif self.p_man.moving_up:
-                    self.p_man.moving_up = False
-                    self.p_man.im.rect.y = brick.bottom + 1
-                elif self.p_man.moving_left:
-                    self.p_man.moving_left = False
-                    self.p_man.im.rect.x = brick.right + 1
-                elif self.p_man.moving_right:
-                    self.p_man.moving_right = False
-                    self.p_man.im.rect.x = brick.left - 1 - self.p_man.rect.width
+        collisions = pygame.sprite.spritecollide(self.p_man, self.ghosts, False)
+        if collisions:
+            self.p_man.dead = True
+
         s_rect = self.p_man.screen.get_rect()
         if self.p_man.rect.x < 0:
             self.p_man.rect.x = s_rect.width

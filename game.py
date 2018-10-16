@@ -19,11 +19,15 @@ class Game:
         self.clock = pygame.time.Clock()
         self.maze = Maze(self.screen, 'mazefile1.txt')
         self.p_man = PacMan(self.screen, 25, 13, self.maze)
-        self.pinky = Ghost('p', self.p_man, self.screen, self.maze, 13, 14)
-        self.blinky = Ghost('b', self.p_man, self.screen, self.maze, 19, 14)
+        self.pinky = Ghost('p', self.p_man, self.screen, self.maze, 16, 14)
+        self.blinky = Ghost('b', self.p_man, self.screen, self.maze, 13, 14)
+        self.inky = Ghost('i', self.p_man, self.screen, self.maze, 16, 12, self.blinky)
+        self.clyde = Ghost('c', self.p_man, self.screen, self.maze, 16, 16)
         self.ghosts = Group()
         self.ghosts.add(self.blinky)
         self.ghosts.add(self.pinky)
+        self.ghosts.add(self.inky)
+        self.ghosts.add(self.clyde)
         self.stats = GameStats()
         self.sb = Scoreboard(self.screen, self.stats)
 
@@ -33,9 +37,13 @@ class Game:
         if not self.p_man.dead:
             self.blinky.update_target()
             self.pinky.update_target()
+            self.inky.update_target()
+            self.clyde.update_target()
             self.ghosts.update(True)
             self.pinky.blitme()
+            self.inky.blitme()
             self.blinky.blitme()
+            self.clyde.blitme()
         self.p_man.update()
         self.p_man.blitme()
         self.sb.prep_score()
@@ -48,6 +56,7 @@ class Game:
         loop = EventLoop(False, self.p_man, self.maze, self.ghosts, self.stats)
         
         while not loop.finished:
+
             loop.check_events()
             loop.check_collisions()
             self.update_screen()

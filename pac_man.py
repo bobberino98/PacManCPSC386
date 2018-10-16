@@ -25,7 +25,7 @@ class PacMan(Sprite):
         self.speed_timer = pygame.time.get_ticks()
         self.row = row
         self.col = col
-        self.walls = ['T', 'B', 'R', 'L', 'G', 'M', 'N', 'O', 'Y', 'Z', 'W', 'X']
+        self.walls = ['T', 'B', 'R', 'L', 'G', 'M', 'N', 'O', 'Y', 'Z', 'W', 'X', 'S']
         self.dead = False
         self.sound_timer = pygame.time.get_ticks()
         self.finished = False

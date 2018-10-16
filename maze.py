@@ -36,6 +36,7 @@ class Maze:
         self.zwalls = []
         self.wwalls = []
         self.xwalls = []
+        self.shields = []
         self.dots = Group()
         self.pills = Group()
         sz = Maze.BRICK_SIZE
@@ -51,7 +52,7 @@ class Maze:
         self.zwall = ImageRect(screen, "top_right_out", sz, sz)
         self.wwall = ImageRect(screen, "bottom_left_out", sz, sz)
         self.xwall = ImageRect(screen, "bottom_right_out", sz, sz)
-
+        self.shield = ImageRect(screen, "shield", sz, sz)
         self.deltax = self.deltay = Maze.BRICK_SIZE
         self.intersections = []
 
@@ -90,6 +91,8 @@ class Maze:
                     self.wwalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
                 elif col == 'X':
                     self.xwalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
+                elif col == 'S':
+                    self.shields.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
                 elif col == 'd':
                     self.dots.add(Dot(self.screen, pygame.Rect(ncol*dx, nrow*dy, 10, 10)))
 
@@ -140,6 +143,8 @@ class Maze:
             self.screen.blit(self.wwall.image, rect)
         for rect in self.xwalls:
             self.screen.blit(self.xwall.image, rect)
+        for rect in self.shields:
+            self.screen.blit(self.shield.image, rect)
         self.dots.update()
 
         self.pills.update()

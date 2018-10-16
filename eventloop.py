@@ -70,7 +70,15 @@ class EventLoop:
             for sprite in collisions: 
                 self.maze.pills.remove(sprite)
                 self.stats.score += 50
+                for g in self.ghosts:
+                    g.frightened = True
+                    g.fear_timer = pygame.time.get_ticks()
 
         collisions = pygame.sprite.spritecollide(self.p_man, self.ghosts, False)
         if collisions:
-            self.p_man.dead = True
+            for sprite in collisions:
+                if sprite.frightened:
+                    sprite.eaten = True
+
+                elif not sprite.eaten:
+                    self.p_man.dead = True

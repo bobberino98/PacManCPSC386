@@ -1,12 +1,13 @@
 from imagerect import ImageRect
 from pygame.sprite import Sprite
+from pygame.sprite import Group
 import pygame
 from vector import Vec2d
 
 
 class Ghost(Sprite):
 
-    def __init__(self, ghost_type, p_man, screen, maze, row, col, blinky = None):
+    def __init__(self, ghost_type, p_man, screen, maze, row, col, blinky=None):
         super(Ghost, self).__init__()
         self.type = ghost_type
         self.p_man = p_man
@@ -16,6 +17,7 @@ class Ghost(Sprite):
         self.blinky_lvl = 0
         self.blink_timer = 0
         self.blinky = blinky
+        self.explosions = Group()
         if self.type == 'b':
             self.filename = "g_red_"
             self.targetcol = self.p_man.col
@@ -55,7 +57,7 @@ class Ghost(Sprite):
 
         self.screen = screen
         self.target = None
-        self.speed = 200
+        self.speed = 500
         self.leave = 0
 
         self.state = 1
@@ -70,6 +72,10 @@ class Ghost(Sprite):
         self.timer = pygame.time.get_ticks()
         self.frightened = False
         self.fear_timer = 0
+        self.start_time = pygame.time.get_ticks()
+
+    def start(self, start_time):
+        self.start_time = start_time
 
     def animate(self):
         if self.state == 1:
@@ -84,18 +90,21 @@ class Ghost(Sprite):
                 self.im = ImageRect(self.screen, 'g_white_' + str(self.state), 18, 18)
             if self.state == 2:
                 self.im = ImageRect(self.screen, 'g_blue_' + str(self.state), 18, 18)
-        elif self.eaten:
-            self.im = ImageRect(self.screen, 'g_blue_' + str(self.state), 18, 18)
         else:
             self.im = ImageRect(self.screen, self.filename + self.dir + '_' + str(self.state), 18, 18)
+        if self.eaten:
+            self.im = ImageRect(self.screen, 'g_eaten_' + self.dir, 18, 18)
         self.im.rect.centerx = self.col * 10 + 5
         self.im.rect.centery = self.row * 10 + 5
         self.rect = self.im.rect
 
     def update(self, move):
+        for explosion in self.explosions:
+            if (pygame.time.get_ticks() - explosion.time_start) >= 100:
+                self.explosions.remove(explosion)
         if not self.awake:
             if self.type == 'p':
-                if pygame.time.get_ticks() > 2500:
+                if pygame.time.get_ticks() - self.start_time > 2500:
                     self.leave_house()
             elif self.type == 'i':
                 if len(self.maze.dots.sprites()) <= 202:
@@ -103,18 +112,17 @@ class Ghost(Sprite):
             elif self.type == 'c':
                 if len(self.maze.dots.sprites()) <= 154:
                     self.leave_house()
-
+            else:
+                self.leave_house()
             if pygame.time.get_ticks() - self.timer >= self.speed:
                 self.animate()
                 self.timer = pygame.time.get_ticks()
         if self.eaten:
-            self.speed = 60
+            self.speed = 250
             if self.row == 16 and self.col == 14:
 
                 self.awake = False
-                self.leave_house()
-        else:
-            self.speed = 200
+
         if pygame.time.get_ticks() - self.timer >= self.speed and self.awake:
             if move:
                 self.col = self.nextcol
@@ -238,7 +246,6 @@ class Ghost(Sprite):
                 self.targetcol = 0
                 self.targetrow = 30
 
-
     def update_target(self):
         if self.frightened:
             if pygame.time.get_ticks() - self.fear_timer <= 6000:
@@ -252,26 +259,25 @@ class Ghost(Sprite):
                 else:
                     self.targetcol = 27
 
-
             else:
                 self.frightened = False
         if not self.eaten:
-            if pygame.time.get_ticks() < 7000:
+            if pygame.time.get_ticks() - self.start_time < 7000:
                 self.targetrow = self.scatterrow
                 self.targetcol = self.scattercol
             elif pygame.time.get_ticks() <= 27000:
                 self.find_target()
-            elif pygame.time.get_ticks() <= 34000:
+            elif pygame.time.get_ticks() - self.start_time <= 34000:
                 self.targetrow = self.scatterrow
                 self.targetcol = self.scattercol
-            elif pygame.time.get_ticks() <= 54000:
+            elif pygame.time.get_ticks() - self.start_time <= 54000:
                 self.find_target()
-            elif pygame.time.get_ticks() <= 59000:
+            elif pygame.time.get_ticks() - self.start_time <= 59000:
                 self.targetrow = self.scatterrow
                 self.targetcol = self.scattercol
-            elif pygame.time.get_ticks() <= 79000:
+            elif pygame.time.get_ticks() - self.start_time <= 79000:
                 self.find_target()
-            elif pygame.time.get_ticks() <= 84000:
+            elif pygame.time.get_ticks() - self.start_time <= 84000:
                 self.targetrow = self.scatterrow
                 self.targetcol = self.scattercol
 
@@ -279,7 +285,8 @@ class Ghost(Sprite):
             self.find_target()
 
     def leave_house(self):
-        if self.eaten or self.type == 'p':
+        if self.eaten:
+            self.speed = 500
             if self.leave < 3:
                 if pygame.time.get_ticks() - self.timer >= self.speed:
                     self.row -= 1
@@ -292,10 +299,26 @@ class Ghost(Sprite):
             else:
                 self.awake = True
                 self.eaten = False
+                self.frightened = False
+                self.nextrow = self.row
+                self.nextcol = self.col - 1
+
+                self.leave = 0
+        elif self.type == 'p':
+            if self.leave < 3:
+                if pygame.time.get_ticks() - self.timer >= self.speed:
+                    self.row -= 1
+                    self.leave += 1
+                    self.timer = pygame.time.get_ticks()
+                    self.im = ImageRect(self.screen, self.filename + self.dir + '_' + str(self.state), 18, 18)
+                    self.im.rect.centerx = self.col * 10 + 5
+                    self.im.rect.centery = self.row * 10 + 5
+                    self.rect = self.im.rect
+            else:
+                self.awake = True
                 self.nextrow = self.row
                 self.nextcol = self.col - 1
                 self.leave = 0
-
         elif self.type == 'i':
             if pygame.time.get_ticks() - self.timer >= self.speed:
                 if self.leave < 2:
@@ -343,6 +366,6 @@ class Ghost(Sprite):
                     self.nextcol = self.col - 1
                     self.leave = 0
 
-
     def blitme(self):
         self.im.blitme()
+

@@ -10,6 +10,7 @@ class GameStats:
         self.reset_stats()
         self.game_active = False
         self.show_high_score = False
+        self.lives_left = 3
         if os.path.getsize("high_scores.txt") != 0:
             self.high_score = int(f.read())
         else:

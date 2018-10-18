@@ -102,6 +102,7 @@ class PacMan(Sprite):
         else:
             if self.death_state == 1:
                 deathsound = pygame.mixer.Sound("sounds/pacmandies.wav")
+                deathsound.set_volume(1)
                 deathsound.play()
             if pygame.time.get_ticks() - self.speed_timer >= 200 and self.death_state < 12:
                 temp = "pac_man_death_" + str(self.death_state)

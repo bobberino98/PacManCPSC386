@@ -2,15 +2,21 @@ import pygame
 import sys
 
 
+
 class EventLoop:
     
-    def __init__(self, finished, p_man, maze, ghosts, stats):
-        
-        self.finished = finished
+    def __init__(self, p_man, maze, ghosts, stats, pb):
+
+        self.finished = False
+        self.won = False
         self.p_man = p_man
         self.maze = maze
         self.ghosts = ghosts
         self.stats = stats
+        self.pb = pb
+        self.start_time = 0
+        self.eat_timer = 0
+        self.counter = 1
 
     def check_events(self):
         for event in pygame.event.get():
@@ -20,6 +26,17 @@ class EventLoop:
                 self.check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self.check_keyup_events(event)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                self.check_play_button(mouse_x, mouse_y)
+
+    def check_play_button(self, mouse_x, mouse_y):
+        button_clicked = self.pb.rect.collidepoint(mouse_x, mouse_y)
+
+        if button_clicked and not self.stats.game_active:
+            pygame.mouse.set_visible(False)
+            self.stats.game_active = True
+            self.start_time = pygame.time.get_ticks()
 
     def check_keydown_events(self, event):
         if event.key == pygame.K_RIGHT:
@@ -74,11 +91,25 @@ class EventLoop:
                     g.frightened = True
                     g.fear_timer = pygame.time.get_ticks()
 
+        if len(self.maze.dots.sprites()) == 0 and len(self.maze.pills.sprites()) == 0:
+            self.won = True
+
         collisions = pygame.sprite.spritecollide(self.p_man, self.ghosts, False)
         if collisions:
             for sprite in collisions:
-                if sprite.frightened:
+                if sprite.frightened and not sprite.eaten:
                     sprite.eaten = True
+                    temp = pygame.mixer.Sound("sounds/eating_ghost.wav")
+                    temp.set_volume(1)
+
+                    temp.play()
+
+                    if pygame.time.get_ticks() - self.eat_timer < 500:
+                        self.counter += 1
+                    else:
+                        self.counter = 1
+                    self.stats.score += self.counter * 200
+                    self.eat_timer = pygame.time.get_ticks()
 
                 elif not sprite.eaten:
                     self.p_man.dead = True

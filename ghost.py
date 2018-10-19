@@ -57,7 +57,7 @@ class Ghost(Sprite):
 
         self.screen = screen
         self.target = None
-        self.speed = 500
+        self.speed = 200
         self.leave = 0
 
         self.state = 1
@@ -118,7 +118,7 @@ class Ghost(Sprite):
                 self.animate()
                 self.timer = pygame.time.get_ticks()
         if self.eaten:
-            self.speed = 250
+            self.speed = 100
             if self.row == 16 and self.col == 14:
 
                 self.awake = False
@@ -204,7 +204,7 @@ class Ghost(Sprite):
         elif self.type == 'p':
             if self.p_man.dir == 'up':
                 self.targetrow = self.p_man.row - 4
-                self.targetcol = self.p_man.col - 4
+                self.targetcol = self.p_man.col
             elif self.p_man.dir == 'down':
                 self.targetrow = self.p_man.row + 4
                 self.targetcol = self.p_man.col
@@ -219,7 +219,6 @@ class Ghost(Sprite):
             p_vec = Vec2d(self.p_man.col, self.p_man.row)
             if self.p_man.dir == 'up':
                 p_vec.x -= 2
-                p_vec.y -= 2
             elif self.p_man.dir == 'down':
                 p_vec += 2
             elif self.p_man.dir == 'right':
@@ -286,7 +285,7 @@ class Ghost(Sprite):
 
     def leave_house(self):
         if self.eaten:
-            self.speed = 500
+            self.speed = 200
             if self.leave < 3:
                 if pygame.time.get_ticks() - self.timer >= self.speed:
                     self.row -= 1

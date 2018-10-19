@@ -61,6 +61,10 @@ class EventLoop:
             self.p_man.moving_right = False
             self.p_man.moving_up = False
         elif event.key == pygame.K_q:
+            self.p_man.create_portal(1)
+        elif event.key == pygame.K_e:
+            self.p_man.create_portal(2)
+        elif event.key == pygame.K_ESCAPE:
             sys.exit()
 
     def check_keyup_events(self, event):

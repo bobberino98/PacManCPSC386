@@ -114,5 +114,24 @@ class PacMan(Sprite):
             elif pygame.time.get_ticks() - self.speed_timer >= 200 and self.death_state >= 12:
                 self.finished = True
 
+    def create_portal(self, portal_num):
+        current_row = self.maze.rows[self.row]
+
+        if self.dir == 'right':
+            for x in range(self.col, len(current_row)):
+                if current_row[x] == 'R':
+                    current_row = current_row[:x] + str(portal_num) + current_row[x+1:]
+                    break
+        elif self.dir == 'left':
+            current_row = current_row[::-1]
+            for x in range(self.col, len(current_row)):
+                if current_row[x] == 'L':
+                    current_row = current_row[:x] + str(portal_num) + current_row[x+1:]
+                    current_row = current_row[::-1]
+                    break
+
+        self.maze.rows[self.row] = current_row
+        self.maze.update_walls()
+
     def blitme(self):
         self.im.blitme()

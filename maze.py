@@ -52,6 +52,24 @@ class Maze:
         self.zwall = ImageRect(screen, "top_right_out", sz, sz)
         self.wwall = ImageRect(screen, "bottom_left_out", sz, sz)
         self.xwall = ImageRect(screen, "bottom_right_out", sz, sz)
+        self.up_1 = ImageRect(screen, "orng_portal_up", sz, sz)
+        self.up_2 = ImageRect(screen, "blue_portal_up", sz, sz)
+        self.down_1 = ImageRect(screen, "orng_portal_down", sz, sz)
+        self.down_2 = ImageRect(screen, "blue_portal_down", sz, sz)
+        self.left_1 = ImageRect(screen, "orng_portal_left", sz, sz)
+        self.left_2 = ImageRect(screen, "blue_portal_left", sz, sz)
+        self.right_1 = ImageRect(screen, "orng_portal_right", sz, sz)
+        self.right_2 = ImageRect(screen, "blue_portal_right", sz, sz)
+
+        self.up_orng = []
+        self.down_orng = []
+        self.left_orng = []
+        self.right_orng = []
+        self.up_blue = []
+        self.down_blue = []
+        self.left_blue = []
+        self.right_blue = []
+
         self.shield = ImageRect(screen, "shield", sz, sz)
         self.deltax = self.deltay = Maze.BRICK_SIZE
         self.intersections = []
@@ -62,38 +80,12 @@ class Maze:
         r = self.lwall.rect
         w, h = r.width, r.height
         dx, dy, = self.deltax, self.deltay
-
+        self.update_walls()
         for nrow in range(len(self.rows)):
             row = self.rows[nrow]
             for ncol in range(len(row)):
                 col = row[ncol]
-                if col == 'L':
-                    self.lwalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'R':
-                    self.rwalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'T':
-                    self.twalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'B':
-                    self.bwalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'G':
-                    self.gwalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'M':
-                    self.mwalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'N':
-                    self.nwalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'O':
-                    self.owalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'Y':
-                    self.ywalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'Z':
-                    self.zwalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'W':
-                    self.wwalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'X':
-                    self.xwalls.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'S':
-                    self.shields.append(pygame.Rect(ncol*dx, nrow*dy, w, h))
-                elif col == 'd':
+                if col == 'd':
                     self.dots.add(Dot(self.screen, pygame.Rect(ncol*dx, nrow*dy, 10, 10)))
 
                 elif col == '+':
@@ -117,6 +109,57 @@ class Maze:
                 elif col == '6':
                     self.intersections.append(Intersection(False, False, True, True,
                                                            (pygame.Rect(ncol * dx, nrow * dy, w, h))))
+    def update_walls(self):
+        r = self.lwall.rect
+        w, h = r.width, r.height
+        dx, dy, = self.deltax, self.deltay
+
+        for nrow in range(len(self.rows)):
+            row = self.rows[nrow]
+            for ncol in range(len(row)):
+                col = row[ncol]
+                if col == 'L':
+                    self.lwalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'R':
+                    self.rwalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'T':
+                    self.twalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'B':
+                    self.bwalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'G':
+                    self.gwalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'M':
+                    self.mwalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'N':
+                    self.nwalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'O':
+                    self.owalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'Y':
+                    self.ywalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'Z':
+                    self.zwalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'W':
+                    self.wwalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'X':
+                    self.xwalls.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == 'S':
+                    self.shields.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == '1':
+                    self.right_blue.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == '2':
+                    self.right_orng.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == '3':
+                    self.left_blue.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == '4':
+                    self.left_orng.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == '5':
+                    self.up_blue.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == '6':
+                    self.up_orng.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == '7':
+                    self.down_blue.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
+                elif col == '8':
+                    self.down_orng.append(pygame.Rect(ncol * dx, nrow * dy, w, h))
 
     def blitme(self):
         for rect in self.twalls:
@@ -145,6 +188,23 @@ class Maze:
             self.screen.blit(self.xwall.image, rect)
         for rect in self.shields:
             self.screen.blit(self.shield.image, rect)
+        for rect in self.right_blue:
+            self.screen.blit(self.right_1.image, rect)
+        for rect in self.right_orng:
+            self.screen.blit(self.right_2.image, rect)
+        for rect in self.left_blue:
+            self.screen.blit(self.left_1.image, rect)
+        for rect in self.left_orng:
+            self.screen.blit(self.left_2.image, rect)
+        for rect in self.up_blue:
+            self.screen.blit(self.up_1.image, rect)
+        for rect in self.up_orng:
+            self.screen.blit(self.up_2.image, rect)
+        for rect in self.down_blue:
+            self.screen.blit(self.down_1.image, rect)
+        for rect in self.down_orng:
+            self.screen.blit(self.down_2.image, rect)
+
         self.dots.update()
 
         self.pills.update()
